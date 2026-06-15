@@ -1,9 +1,17 @@
 import { useState, useCallback, useEffect } from 'react'
+
+// Styles
 import './App.css'
+
+// Shared
+import { LanguageProvider, useLanguage } from './shared/LanguageContext'
+
+// Features
 import { RadialMenu } from './features/radial-nav/RadialMenu'
 import { SectionView } from './features/sections/SectionView'
+
+// UI Components
 import Lightfall from './components/ui/Lightfall'
-import { LanguageProvider, useLanguage } from './shared/LanguageContext'
 import { LanguageSelector } from './components/ui/LanguageSelector'
 
 function AppContent() {
