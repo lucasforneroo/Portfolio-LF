@@ -1,0 +1,24 @@
+/* Custom Animations for Cyberpunk Feel */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100vh); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes reveal {
+  0% { opacity: 0; filter: blur(20px) brightness(2); transform: scale(1.1); }
+  100% { opacity: 1; filter: blur(0) brightness(1); transform: scale(1); }
+}
+
+@keyframes loading {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-glow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
