@@ -46,5 +46,29 @@ interface RadialMenuProps {
 }
 
 export const RadialMenu: React.FC<RadialMenuProps> = ({ onNodeClick, isZooming, isUnzooming, activeNodeId }) => {
-  return <div className="relative flex items-center justify-center w-[900px] h-[900px]">Radial Menu</div>;
+  const radius = 320;
+
+  const getZoomStyles = () => {
+    if (!activeNodeId) return { transform: 'scale(1) translate(0, 0)', opacity: 1 };
+    const node = NODES.find(n => n.id === activeNodeId);
+    if (!node) return { transform: 'scale(1) translate(0, 0)', opacity: 1 };
+    const x = radius * Math.cos((node.angle * Math.PI) / 180);
+    const y = radius * Math.sin((node.angle * Math.PI) / 180);
+    if (isZooming) return { transform: `scale(4) translate(${-x}px, ${-y}px)`, opacity: 0, transition: 'transform 1.2s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.8s ease-in 0.4s' };
+    if (isUnzooming) return { transform: 'scale(1) translate(0, 0)', opacity: 1, transition: 'transform 1.2s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.8s ease-out' };
+    return { transform: `scale(4) translate(${-x}px, ${-y}px)`, opacity: 0 };
+  };
+
+  return (
+    <div className="relative flex items-center justify-center w-[900px] h-[900px] transition-all duration-1000" style={getZoomStyles()}>
+      <svg className="absolute inset-0 w-full h-full pointer-events-none">
+        {NODES.map((node, index) => {
+          const x = 450 + radius * Math.cos((node.angle * Math.PI) / 180);
+          const y = 450 + radius * Math.sin((node.angle * Math.PI) / 180);
+          const currentColor = NODE_COLORS[index % NODE_COLORS.length];
+          return <line key={`line-${node.id}`} x1="450" y1="450" x2={x} y2={y} stroke={currentColor} strokeOpacity="0.15" strokeWidth="1.5" className="transition-all duration-[2000ms] ease-in-out" style={{ filter: `drop-shadow(0 0 3px ${currentColor})` }} />;
+        })}
+      </svg>
+    </div>
+  );
 };
