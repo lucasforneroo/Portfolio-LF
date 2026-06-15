@@ -78,9 +78,6 @@ function AppContent() {
       </div>
 
       <div className={`absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-neon-cyan/5 rounded-full blur-[120px] animate-pulse-slow transition-opacity duration-1000 ${showSection ? 'opacity-0' : 'opacity-100'}`} />
-      <div className={`absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-neon-violet/5 rounded-full blur-[120px] animate-pulse-slow transition-opacity duration-1000 ${showSection ? 'opacity-0' : 'opacity-100'}`} />
-      
-      {!showSection && <div className="absolute inset-0 w-full h-[2px] bg-neon-cyan/10 top-0 animate-[scan_8s_linear_infinite] z-10" />}
 
       {/* Language Selector - Placed at the end of the root div for absolute top priority */}
       <LanguageSelector />

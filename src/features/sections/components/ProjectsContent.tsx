@@ -47,7 +47,7 @@ export const ProjectsContent: React.FC = () => {
       description: t.projects.waspai.description, 
       period: 'Marzo 2026 - Actualidad', 
       link: 'https://wasp-ai.vercel.app', 
-      github: 'https://github.com/lucasforneroo', 
+      github: 'https://github.com/lucasforneroo/WaspAI', 
       stack: ['Next.js 16', 'TypeScript', 'Gemini Pro', 'Supabase', 'Tailwind', 'Sentry'], 
       achievements: t.projects.waspai.achievements, 
       color: '#00f3ff', 
