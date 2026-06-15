@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+:root {
+  /* Neon Overdrive Theme - Cyberpunk Palette */
+  --color-bg: #050505;
+  --color-neon-cyan: #00f3ff;
+  --color-neon-blue: #0044ff;
+  --color-neon-violet: #bc13fe;
+  --color-neon-fuchsia: #ff00ff;
+  --color-neon-pink-red: #ff0055;
+  
+  /* Glow Effects */
+  --glow-cyan: 0 0 10px var(--color-neon-cyan), 0 0 20px var(--color-neon-cyan);
+  --glow-violet: 0 0 10px var(--color-neon-violet), 0 0 20px var(--color-neon-violet);
+}
+
+@theme {
+  --color-neon-cyan: var(--color-neon-cyan);
+  --color-neon-blue: var(--color-neon-blue);
+  --color-neon-violet: var(--color-neon-violet);
+  --color-neon-fuchsia: var(--color-neon-fuchsia);
+  --color-neon-pink-red: var(--color-neon-pink-red);
+}
+
+@keyframes nucleus-color-cycle {
+  0%, 100% { border-color: var(--color-neon-cyan); box-shadow: 0 0 30px rgba(0, 243, 255, 0.4); }
+  25% { border-color: var(--color-neon-blue); box-shadow: 0 0 30px rgba(0, 68, 255, 0.4); }
+  50% { border-color: var(--color-neon-violet); box-shadow: 0 0 30px rgba(188, 19, 254, 0.4); }
+  75% { border-color: var(--color-neon-fuchsia); box-shadow: 0 0 30px rgba(255, 0, 255, 0.4); }
+}
+
+.animate-nucleus-cycle {
+  animation: nucleus-color-cycle 12s infinite linear;
+}
+
+@keyframes glitch-flicker {
+  0%, 100% { opacity: 1; filter: brightness(1) blur(0); }
+  1% { opacity: 0; filter: brightness(0) blur(2px); }
+  2% { opacity: 1; filter: brightness(1.2) blur(0); }
+  45% { opacity: 1; }
+  46% { opacity: 0.3; }
+  47% { opacity: 1; }
+  88% { opacity: 1; }
+  89% { opacity: 0; }
+  90% { opacity: 1; }
+}
+
+.animate-glitch {
+  animation: glitch-flicker 5s infinite step-end;
+}
+
+.font-cyber {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 0.5em;
+}
+
+.hexagon-clip {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+body {
+  @apply bg-[#050505] text-white font-sans antialiased;
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden; /* Lock scroll */
+}
+
+html {
+  overflow: hidden; /* Lock scroll */
+}
