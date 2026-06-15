@@ -52,10 +52,16 @@ export const SectionView: React.FC<SectionProps> = ({ id, onBack, isUnzooming })
           </button>
         </header>
 
-        <div className="w-full">
+        <div className="w-full max-h-[70vh] overflow-y-auto custom-scrollbar">
           {currentContent}
         </div>
       </div>
+      <style>{`
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #bc13fe40; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #bc13fe; }
+      `}</style>
     </div>
   );
 };
