@@ -13,6 +13,7 @@ import { SectionView } from './features/sections/SectionView'
 // UI Components
 import Lightfall from './components/ui/Lightfall'
 import { LanguageSelector } from './components/ui/LanguageSelector'
+import GhostCursor from './components/ui/GhostCursor'
 
 function AppContent() {
   const [activeNode, setActiveNode] = useState<string | null>(null);
@@ -22,7 +23,15 @@ function AppContent() {
   const [isClosingSection, setIsClosingSection] = useState(false);
   const [colorOffset, setColorOffset] = useState(0);
   const [isFlickering, setIsFlickering] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const { t } = useLanguage();
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => setColorOffset(p => (p + 1) % 5), 3000);
@@ -72,6 +81,7 @@ function AppContent() {
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#050505]">
+      {!isMobile && <GhostCursor />}
       {/* Background */}
       <div className="absolute inset-0 z-0 text-white pointer-events-none">
         <Lightfall colors={['#000064ff', '#30064aff', '#320019ff']} backgroundColor="#000000" speed={0.6} streakCount={2} streakWidth={0.2} streakLength={3} glow={1.2} density={0.7} twinkle={0.8} zoom={1} backgroundGlow={0.3} opacity={0.8} mouseInteraction={false} mouseStrength={0.2} mouseRadius={0.1} />
