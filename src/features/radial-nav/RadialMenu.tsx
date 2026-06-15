@@ -46,7 +46,7 @@ interface RadialMenuProps {
 }
 
 export const RadialMenu: React.FC<RadialMenuProps> = ({ onNodeClick, isZooming, isUnzooming, activeNodeId }) => {
-  const radius = 320;
+  const radius = window.innerWidth < 768 ? 160 : 320;
   const [colorOffset, setColorOffset] = useState(0);
   const { t } = useLanguage();
 
@@ -63,13 +63,14 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({ onNodeClick, isZooming, 
     if (!node) return { transform: 'scale(1) translate(0, 0)', opacity: 1 };
     const x = radius * Math.cos((node.angle * Math.PI) / 180);
     const y = radius * Math.sin((node.angle * Math.PI) / 180);
-    if (isZooming) return { transform: `scale(4) translate(${-x}px, ${-y}px)`, opacity: 0, transition: 'transform 1.2s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.8s ease-in 0.4s' };
+    const scaleFactor = window.innerWidth < 768 ? 2 : 4;
+    if (isZooming) return { transform: `scale(${scaleFactor}) translate(${-x}px, ${-y}px)`, opacity: 0, transition: 'transform 1.2s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.8s ease-in 0.4s' };
     if (isUnzooming) return { transform: 'scale(1) translate(0, 0)', opacity: 1, transition: 'transform 1.2s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.8s ease-out' };
-    return { transform: `scale(4) translate(${-x}px, ${-y}px)`, opacity: 0 };
+    return { transform: `scale(${scaleFactor}) translate(${-x}px, ${-y}px)`, opacity: 0 };
   };
 
   return (
-    <div className="relative flex items-center justify-center w-[900px] h-[900px] transition-all duration-1000" style={getZoomStyles()}>
+    <div className="relative flex items-center justify-center w-[90vw] h-[90vw] transition-all duration-1000 scale-[0.6] md:scale-100" style={getZoomStyles()}>
       <svg className="absolute inset-0 w-full h-full pointer-events-none">
         {NODES.map((node, index) => {
           const x = 450 + radius * Math.cos((node.angle * Math.PI) / 180);
@@ -78,7 +79,7 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({ onNodeClick, isZooming, 
           return <line key={`line-${node.id}`} x1="450" y1="450" x2={x} y2={y} stroke={currentColor} strokeOpacity="0.15" strokeWidth="1.5" className="transition-all duration-[2000ms] ease-in-out" style={{ filter: `drop-shadow(0 0 3px ${currentColor})` }} />;
         })}
       </svg>
-      <div className="relative z-20 w-56 h-56 rounded-full border-2 bg-black animate-nucleus-cycle flex items-center justify-center overflow-hidden transition-all duration-700 hover:scale-110 shadow-[0_0_50px_rgba(0,0,0,0.8)] group">
+      <div className="relative z-20 w-32 h-32 md:w-56 md:h-56 rounded-full border-2 bg-black animate-nucleus-cycle flex items-center justify-center overflow-hidden transition-all duration-700 hover:scale-110 shadow-[0_0_50px_rgba(0,0,0,0.8)] group">
         <img src="/hero.png" alt="Lucas Fornero" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
         <div className="absolute inset-0 bg-gradient-to-tr from-black via-transparent to-black opacity-40 pointer-events-none" />
         <div className="absolute inset-0 bg-white/5 animate-pulse-slow pointer-events-none" />
@@ -90,12 +91,12 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({ onNodeClick, isZooming, 
         const label = t.nav[node.id as keyof typeof t.nav];
         return (
           <button key={node.id} onClick={() => onNodeClick(node.id)} disabled={isZooming} className="absolute z-30 group flex flex-col items-center justify-center transition-all duration-500 hover:scale-110 disabled:pointer-events-none" style={{ transform: `translate(${x}px, ${y}px)` }}>
-            <div className="w-24 h-24 hexagon-clip flex items-center justify-center transition-all duration-[2000ms] ease-in-out" style={{ backgroundColor: currentColor, filter: `drop-shadow(0 0 15px ${currentColor})` }}>
+            <div className="w-16 h-16 md:w-24 md:h-24 hexagon-clip flex items-center justify-center transition-all duration-[2000ms] ease-in-out" style={{ backgroundColor: currentColor, filter: `drop-shadow(0 0 15px ${currentColor})` }}>
               <div className="w-[calc(100%-6px)] h-[calc(100%-6px)] bg-black hexagon-clip flex items-center justify-center">
-                <div className="transition-all duration-[2000ms] ease-in-out group-hover:scale-110" style={{ color: currentColor }}>{node.icon(28)}</div>
+                <div className="transition-all duration-[2000ms] ease-in-out group-hover:scale-110" style={{ color: currentColor }}>{node.icon(window.innerWidth < 768 ? 20 : 28)}</div>
               </div>
             </div>
-            <span className="absolute mt-32 whitespace-nowrap text-xs font-mono tracking-[0.3em] uppercase transition-all duration-[2000ms] ease-in-out font-bold text-white" style={{ textShadow: `0 0 8px ${currentColor}`, opacity: 0.9 }}>{label}</span>
+            <span className="absolute mt-20 md:mt-32 whitespace-nowrap text-[10px] md:text-xs font-mono tracking-[0.2em] md:tracking-[0.3em] uppercase transition-all duration-[2000ms] ease-in-out font-bold text-white" style={{ textShadow: `0 0 8px ${currentColor}`, opacity: 0.9 }}>{label}</span>
           </button>
         );
       })}
