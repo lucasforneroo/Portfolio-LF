@@ -70,7 +70,7 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({ onNodeClick, isZooming, 
   };
 
   return (
-    <div className="relative flex items-center justify-center w-[900px] h-[900px] transition-all duration-1000 scale-[0.3] md:scale-100 origin-center" style={getZoomStyles()}>
+    <div className="relative flex items-center justify-center w-[900px] h-[900px] transition-all duration-1000 scale-[0.5] md:scale-100 origin-center" style={getZoomStyles()}>
       <svg className="absolute inset-0 w-full h-full pointer-events-none">
         {NODES.map((node, index) => {
           const x = 450 + radius * Math.cos((node.angle * Math.PI) / 180);
@@ -96,7 +96,7 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({ onNodeClick, isZooming, 
                 <div className="transition-all duration-[2000ms] ease-in-out group-hover:scale-110" style={{ color: currentColor }}>{node.icon(28)}</div>
               </div>
             </div>
-            <span className="absolute mt-32 whitespace-nowrap text-xs font-mono tracking-[0.3em] uppercase transition-all duration-[2000ms] ease-in-out font-bold text-white" style={{ textShadow: `0 0 8px ${currentColor}`, opacity: 0.9 }}>{label}</span>
+            <span className="absolute mt-28 whitespace-nowrap text-xs font-mono tracking-[0.3em] uppercase transition-all duration-[2000ms] ease-in-out font-bold text-white" style={{ textShadow: `0 0 8px ${currentColor}`, opacity: 0.9 }}>{label}</span>
           </button>
         );
       })}
