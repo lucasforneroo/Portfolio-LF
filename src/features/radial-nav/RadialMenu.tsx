@@ -36,17 +36,9 @@ const NODES: NavNode[] = [
   { id: 'contact', angle: 198, icon: (s) => <MailIcon size={s} /> },
 ];
 
-const NODE_COLORS = ['#00f3ff', '#0044ff', '#bc13fe', '#ff00ff', '#ff0055'];
+// ... (existing code)
 
-interface RadialMenuProps {
-  onNodeClick: (id: string) => void;
-  isZooming: boolean;
-  isUnzooming?: boolean;
-  activeNodeId: string | null;
-}
-
-export const RadialMenu: React.FC<RadialMenuProps> = ({ onNodeClick, isZooming, isUnzooming, activeNodeId }) => {
-  const radius = window.innerWidth < 768 ? 160 : 320;
+  const radius = window.innerWidth < 768 ? 200 : 350; // Increased radius for longer arms
   const [colorOffset, setColorOffset] = useState(0);
   const { t } = useLanguage();
 

@@ -123,7 +123,7 @@ export const ProjectsContent: React.FC = () => {
                 <img 
                   src="/waspai-preview.png" 
                   alt="WaspAI Preview" 
-                  className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                  className="absolute inset-0 w-full h-full object-contain p-4 opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} 
                 />
               ) : (

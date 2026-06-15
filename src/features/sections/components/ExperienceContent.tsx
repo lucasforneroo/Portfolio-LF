@@ -35,7 +35,7 @@ export const ExperienceContent: React.FC = () => {
               </h3>
               <div className="flex flex-wrap gap-4 text-sm font-mono text-gray-400">
                 <span className="px-2 border border-white/20 bg-white/5 uppercase tracking-widest">{exp.company}</span>
-                <span className="text-neon-violet/80">[{'2026'}]</span>
+                <span className="text-neon-violet/80">[{'Enero 2026 - Marzo 2026'}]</span>
                 <span className="opacity-60">{data.location}</span>
               </div>
             </header>

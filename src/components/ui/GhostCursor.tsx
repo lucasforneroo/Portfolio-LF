@@ -311,7 +311,7 @@ const GhostCursor: React.FC<GhostCursorProps> = ({
     const renderPass = new RenderPass(scene, camera);
     composer.addPass(renderPass);
 
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(1, 1), bloomStrength, bloomRadius, bloomThreshold);
+    const bloomPass = new UnrealBloomPass(new THREE.Vector2(1, 1), isTouch ? bloomStrength * 0.2 : bloomStrength, bloomRadius, bloomThreshold);
     bloomPassRef.current = bloomPass;
     composer.addPass(bloomPass);
 
