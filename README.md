@@ -32,7 +32,7 @@ npm run dev
 
 ## 🌐 Live Demo
 
-[https://portfolio-lf.vercel.app](https://portfolio-lf.vercel.app)
+[https://portfolio-lf.vercel.app]
 
 ## 📄 License
 
