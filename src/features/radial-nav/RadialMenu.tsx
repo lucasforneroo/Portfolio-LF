@@ -36,9 +36,17 @@ const NODES: NavNode[] = [
   { id: 'contact', angle: 198, icon: (s) => <MailIcon size={s} /> },
 ];
 
-// ... (existing code)
+const NODE_COLORS = ['#00f3ff', '#0044ff', '#bc13fe', '#ff00ff', '#ff0055'];
 
-  const radius = window.innerWidth < 768 ? 200 : 350; // Increased radius for longer arms
+interface RadialMenuProps {
+  onNodeClick: (id: string) => void;
+  isZooming: boolean;
+  isUnzooming?: boolean;
+  activeNodeId: string | null;
+}
+
+export const RadialMenu: React.FC<RadialMenuProps> = ({ onNodeClick, isZooming, isUnzooming, activeNodeId }) => {
+  const radius = window.innerWidth < 768 ? 200 : 350;
   const [colorOffset, setColorOffset] = useState(0);
   const { t } = useLanguage();
 
@@ -88,7 +96,7 @@ const NODES: NavNode[] = [
                 <div className="transition-all duration-[2000ms] ease-in-out group-hover:scale-110" style={{ color: currentColor }}>{node.icon(28)}</div>
               </div>
             </div>
-            <span className="absolute mt-28 whitespace-nowrap text-xs font-mono tracking-[0.3em] uppercase transition-all duration-[2000ms] ease-in-out font-bold text-white" style={{ textShadow: `0 0 8px ${currentColor}`, opacity: 0.9 }}>{label}</span>
+            <span className="absolute mt-32 whitespace-nowrap text-xs font-mono tracking-[0.3em] uppercase transition-all duration-[2000ms] ease-in-out font-bold text-white" style={{ textShadow: `0 0 8px ${currentColor}`, opacity: 0.9 }}>{label}</span>
           </button>
         );
       })}
