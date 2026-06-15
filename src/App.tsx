@@ -13,7 +13,6 @@ import { SectionView } from './features/sections/SectionView'
 // UI Components
 import Lightfall from './components/ui/Lightfall'
 import { LanguageSelector } from './components/ui/LanguageSelector'
-import GhostCursor from './components/ui/GhostCursor'
 
 function AppContent() {
   const [activeNode, setActiveNode] = useState<string | null>(null);
