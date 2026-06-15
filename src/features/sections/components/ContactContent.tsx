@@ -1,9 +1,7 @@
 import React from 'react';
-import { useLanguage } from '../../../shared/LanguageContext';
 import TargetCursor from '../../../components/ui/TargetCursor';
 
 export const ContactContent: React.FC = () => {
-  const { t } = useLanguage();
 
   // --- CUSTOM SVG COMPONENTS (Zero Dependency) ---
   const MailIcon = ({ size = 32, color = "currentColor" }: { size?: number, color?: string }) => (

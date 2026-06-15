@@ -85,12 +85,10 @@ export const SkillsContent: React.FC = () => {
   const fgRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
-  const [colorOffset, setColorOffset] = useState(0);
   const { t } = useLanguage();
 
   useEffect(() => {
-    const interval = setInterval(() => setColorOffset(p => (p + 1) % 5), 3000);
-    return () => clearInterval(interval);
+    // Skills visualization setup
   }, []);
 
   const graphData = useMemo(() => JSON.parse(JSON.stringify(SKILLS_BASE_DATA)), []);
