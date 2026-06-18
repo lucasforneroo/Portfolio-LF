@@ -13,6 +13,7 @@ import { SectionView } from './features/sections/SectionView'
 // UI Components
 import Lightfall from './components/ui/Lightfall'
 import { LanguageSelector } from './components/ui/LanguageSelector'
+import { ContactActions } from './components/ui/ContactActions'
 
 function AppContent() {
   const [activeNode, setActiveNode] = useState<string | null>(null);
@@ -72,15 +73,22 @@ function AppContent() {
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#050505]">
-      {/* Background */}
+      {/* Background with WebGL Error Handling */}
       <div className="absolute inset-0 z-0 text-white pointer-events-none">
-        <Lightfall colors={['#000064ff', '#30064aff', '#320019ff']} backgroundColor="#000000" speed={0.6} streakCount={2} streakWidth={0.2} streakLength={3} glow={1.2} density={0.7} twinkle={0.8} zoom={1} backgroundGlow={0.3} opacity={0.8} mouseInteraction={false} mouseStrength={0.2} mouseRadius={0.1} />
+        {typeof window !== 'undefined' && window.WebGLRenderingContext ? (
+          <Lightfall colors={['#000064ff', '#30064aff', '#320019ff']} backgroundColor="#000000" speed={0.6} streakCount={2} streakWidth={0.2} streakLength={3} glow={1.2} density={0.7} twinkle={0.8} zoom={1} backgroundGlow={0.3} opacity={0.8} mouseInteraction={false} mouseStrength={0.2} mouseRadius={0.1} />
+        ) : (
+          <div className="w-full h-full bg-[#050505]" />
+        )}
       </div>
 
       <div className={`absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-neon-cyan/5 rounded-full blur-[120px] animate-pulse-slow transition-opacity duration-1000 ${showSection ? 'opacity-0' : 'opacity-100'}`} />
 
-      {/* Language Selector - Placed at the end of the root div for absolute top priority */}
+      {/* Language Selector */}
       <LanguageSelector />
+      
+      {/* Persistent Contact Actions */}
+      <ContactActions />
 
       {/* Main Menu Shell */}
       <div className={`fixed inset-0 flex items-center justify-center z-20 transition-all duration-1000 ${(showSection && !isUnzooming) ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
