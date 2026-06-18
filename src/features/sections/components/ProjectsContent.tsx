@@ -89,32 +89,43 @@ export const ProjectsContent: React.FC = () => {
             <div className="lg:col-span-8 p-8 relative z-10 space-y-6 text-left text-white">
               <header className="space-y-2 text-left">
                 <div className="flex items-center gap-4 text-white">
-                  <span className="text-[10px] font-mono px-2 py-1 bg-white/5 border border-white/10 text-gray-400 tracking-[0.2em]">{project.category}</span>
+                  <span className="text-[10px] font-mono px-2 py-1 bg-neon-cyan/10 border border-neon-cyan/30 text-neon-cyan tracking-[0.2em] font-bold uppercase">{project.category}</span>
                   <div className="h-[1px] flex-grow bg-white/10" />
-                  <span className="text-[10px] font-mono text-gray-500 uppercase">[{project.period}]</span>
+                  <span className="text-[10px] font-mono text-neon-violet uppercase font-bold">[{project.period}]</span>
                 </div>
-                <h3 className="text-4xl font-black tracking-tighter text-white uppercase group-hover:text-transparent group-hover:bg-clip-text transition-all duration-500" style={{ backgroundImage: `linear-gradient(to right, ${project.color}, #ffffff)` }}>{project.title}</h3>
-                <p className="text-neon-cyan/80 font-mono text-sm tracking-widest">{project.subtitle}</p>
+                <h3 className="text-4xl md:text-5xl font-black tracking-tighter text-white uppercase group-hover:text-transparent group-hover:bg-clip-text transition-all duration-500" style={{ backgroundImage: `linear-gradient(to right, ${project.color}, #ffffff)` }}>{project.title}</h3>
+                <p className="text-neon-cyan font-mono text-sm tracking-widest font-bold">{project.subtitle}</p>
               </header>
 
               <div className="flex flex-wrap gap-2">
-                {project.stack.map(tech => <span key={tech} className="text-[9px] font-mono border border-white/10 px-2 py-1 bg-black/50 text-gray-300">{tech}</span>)}
+                {project.stack.map(tech => <span key={tech} className="text-[10px] font-mono border border-white/20 px-3 py-1 bg-white/5 text-gray-200 font-bold hover:border-neon-cyan/50 transition-colors">{tech}</span>)}
               </div>
 
               {/* Detailed Description */}
               {project.description && (
-                <p className="text-sm text-gray-300 font-light leading-relaxed border-l-2 pl-4 py-1 italic" style={{ borderColor: `${project.color}80` }}>
+                <p className="text-lg text-gray-300 font-light leading-relaxed border-l-2 pl-4 py-1 italic" style={{ borderColor: `${project.color}80` }}>
                   {project.description}
                 </p>
               )}
 
               <ul className="space-y-3">
-                {project.achievements.map((ach, i) => <li key={i} className="flex gap-3 text-sm text-gray-400 leading-relaxed group-hover:text-gray-200 transition-colors"><span style={{ color: project.color }}>::</span>{ach}</li>)}
+                {project.achievements.map((ach, i) => (
+                  <li key={i} className="flex gap-3 text-base text-gray-400 leading-relaxed group-hover:text-gray-200 transition-colors">
+                    <span style={{ color: project.color }} className="font-bold">::</span>
+                    <span>
+                      {ach.split(' ').map((word, idx) => {
+                        const projectKeywords = ['IA', 'tiempo real', 'escalable', 'seguro', 'integración', 'automatizado', 'Dashboard', 'Cloud'];
+                        const isKeyword = projectKeywords.some(k => word.toLowerCase().includes(k.toLowerCase()));
+                        return isKeyword ? <strong key={idx} className="font-bold text-white/90">{word} </strong> : word + ' ';
+                      })}
+                    </span>
+                  </li>
+                ))}
               </ul>
 
-              <div className="flex gap-6 pt-4 text-white">
-                {project.link && <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs font-mono tracking-widest text-white hover:text-neon-cyan transition-colors"><ExternalLinkIcon size={14} /> {t.projects.viewLive}</a>}
-                {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs font-mono tracking-widest text-white hover:text-neon-violet transition-colors"><GithubIcon size={14} /> {t.projects.sourceCode}</a>}
+              <div className="flex gap-8 pt-4 text-white">
+                {project.link && <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs font-mono tracking-[widest] text-white hover:text-neon-cyan transition-all hover:scale-105 font-bold uppercase"><ExternalLinkIcon size={14} /> {t.projects.viewLive}</a>}
+                {project.github && <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs font-mono tracking-[widest] text-white hover:text-neon-violet transition-all hover:scale-105 font-bold uppercase"><GithubIcon size={14} /> {t.projects.sourceCode}</a>}
               </div>
             </div>
             

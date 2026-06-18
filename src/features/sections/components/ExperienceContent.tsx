@@ -30,20 +30,27 @@ export const ExperienceContent: React.FC = () => {
           <div className="absolute top-0 left-0 w-1 h-0 group-hover:h-full transition-all duration-1000 bg-gradient-to-b from-neon-cyan to-neon-violet" />
           <div className="lg:col-span-8 space-y-6 text-left">
             <header className="space-y-4">
-              <h3 className="text-4xl font-black tracking-tighter text-white uppercase italic transition-colors group-hover:text-neon-cyan">
+              <h3 className="text-4xl md:text-5xl font-black tracking-tighter text-white uppercase italic transition-colors group-hover:text-neon-cyan">
                 {data.role}
               </h3>
-              <div className="flex flex-wrap gap-4 text-sm font-mono text-gray-400">
-                <span className="px-2 border border-white/20 bg-white/5 uppercase tracking-widest">{exp.company}</span>
-                <span className="text-neon-violet/80">[{'Enero 2026 - Marzo 2026'}]</span>
-                <span className="opacity-60">{data.location}</span>
+              <div className="flex flex-wrap gap-4 text-sm font-mono">
+                <span className="px-3 py-1 border border-neon-cyan/50 bg-neon-cyan/10 text-neon-cyan uppercase tracking-widest font-bold">{exp.company}</span>
+                <span className="text-neon-violet font-bold">[{'Enero 2026 - Marzo 2026'}]</span>
+                <span className="text-gray-400 opacity-80 font-bold">{data.location}</span>
               </div>
             </header>
             <ul className="space-y-4 relative">
               {data.achievements.map((item: string, i: number) => (
                 <li key={i} className="flex gap-4 group/item">
-                  <span className="text-neon-cyan font-mono text-lg shrink-0 mt-1">{">"}</span>
-                  <p className="text-gray-300 leading-relaxed font-light text-lg transition-colors group-hover/item:text-white">{item}</p>
+                  <span className="text-neon-cyan font-mono text-lg shrink-0 mt-1 font-bold">{">"}</span>
+                  <p className="text-gray-300 leading-relaxed font-light text-lg transition-colors group-hover/item:text-white">
+                    {item.split(' ').map((word, idx) => {
+                      // Palabras clave para resaltar
+                      const keywords = ['liderando', 'arquitectura', 'desarrollo', 'optimización', 'escalabilidad', 'seguridad', 'automatización', 'CI/CD', 'React', 'TypeScript', 'Node.js'];
+                      const isKeyword = keywords.some(k => word.toLowerCase().includes(k.toLowerCase()));
+                      return isKeyword ? <strong key={idx} className="font-bold text-neon-cyan/90">{word} </strong> : word + ' ';
+                    })}
+                  </p>
                 </li>
               ))}
             </ul>
