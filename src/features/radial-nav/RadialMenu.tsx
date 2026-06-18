@@ -70,7 +70,7 @@ export const RadialMenu: React.FC<RadialMenuProps> = ({ onNodeClick, isZooming, 
   };
 
   return (
-    <div className="relative flex items-center justify-center w-[900px] h-[900px] transition-all duration-1000 scale-[0.8] md:scale-[0.8] origin-center" style={getZoomStyles()}>
+    <div className="relative flex items-center justify-center w-[900px] h-[900px] transition-all duration-1000 scale-[0.6] md:scale-[0.8] origin-center" style={getZoomStyles()}>
       <svg className="absolute inset-0 w-full h-full pointer-events-none">
         {NODES.map((node, index) => {
           const x = 450 + radius * Math.cos((node.angle * Math.PI) / 180);
