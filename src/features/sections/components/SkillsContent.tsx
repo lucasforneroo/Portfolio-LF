@@ -89,6 +89,8 @@ export const SkillsContent: React.FC = () => {
   const { t } = useLanguage();
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
+  const graphData = useMemo(() => JSON.parse(JSON.stringify(SKILLS_BASE_DATA)), []);
+
   useEffect(() => {
     if (containerRef.current) {
       setDimensions({
@@ -100,9 +102,7 @@ export const SkillsContent: React.FC = () => {
 
   const handleEngineStop = useCallback(() => {
     if (fgRef.current) {
-      // Increased repulsion strength for better area separation
       fgRef.current.d3Force('charge').strength(-600); 
-      // Increased link distance for better subnode visibility
       fgRef.current.d3Force('link').distance((l: any) => (l.source.isRoot || l.target.isRoot) ? 250 : 120).strength(0.8);
     }
   }, []);
@@ -113,7 +113,6 @@ export const SkillsContent: React.FC = () => {
         <h3 className="text-neon-violet text-sm tracking-widest">{t.skills.matrix}</h3>
       </div>
 
-      {/* Help Button */}
       <button 
         onClick={() => setShowHelp(!showHelp)}
         className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full border border-neon-cyan/50 text-neon-cyan hover:bg-neon-cyan hover:text-black flex items-center justify-center font-bold text-xs transition-all duration-300"
@@ -123,7 +122,7 @@ export const SkillsContent: React.FC = () => {
 
       {showHelp && (
         <div className="absolute inset-0 z-30 bg-black/80 p-6 flex flex-col items-center justify-center text-center font-mono text-sm text-white">
-          <p className="mb-4">{t.skills.helpText || "Arrastra los nodos para explorar la jerarquía técnica. El tamaño y color indican el dominio."}</p>
+          <p className="mb-4">Arrastra los nodos para explorar la jerarquía técnica. El tamaño y color indican el dominio.</p>
           <button onClick={() => setShowHelp(false)} className="px-4 py-2 border border-white/50 text-white hover:bg-white/10 transition">OK</button>
         </div>
       )}
@@ -133,7 +132,7 @@ export const SkillsContent: React.FC = () => {
       <ForceGraph2D
         ref={fgRef}
         graphData={graphData}
-// ... (rest of the component)
+        nodeId="id"
         width={dimensions.width}
         height={dimensions.height}
         backgroundColor="rgba(0,0,0,0)"
@@ -142,11 +141,9 @@ export const SkillsContent: React.FC = () => {
         enableNodeDrag={true}
         nodePointerAreaPaint={(node: any, color, ctx) => {
           ctx.fillStyle = color;
-          const isRoot = node.isRoot;
-          const label = node.label ?? '';
-          const fontSize = isRoot ? 18 : 14;
+          const fontSize = node.isRoot ? 18 : 14;
           ctx.font = `bold ${fontSize}px "JetBrains Mono", monospace`;
-          const w = ctx.measureText(label).width;
+          const w = ctx.measureText(node.label).width;
           const h = fontSize * 2;
           ctx.fillRect((node.x ?? 0) - w / 2 - 10, (node.y ?? 0) - h / 2, w + 20, h);
         }}
