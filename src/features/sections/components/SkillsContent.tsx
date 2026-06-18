@@ -85,40 +85,55 @@ export const SkillsContent: React.FC = () => {
   const fgRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
+  const [showHelp, setShowHelp] = useState(false);
   const { t } = useLanguage();
-
-  useEffect(() => {
-    // Skills visualization setup
-  }, []);
-
-  const graphData = useMemo(() => JSON.parse(JSON.stringify(SKILLS_BASE_DATA)), []);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   useEffect(() => {
     if (containerRef.current) {
       setDimensions({
-        width: containerRef.current.offsetWidth || 800,
-        height: containerRef.current.offsetHeight || 600
+        width: containerRef.current.offsetWidth || 300,
+        height: containerRef.current.offsetHeight || 400
       });
     }
   }, []);
 
   const handleEngineStop = useCallback(() => {
     if (fgRef.current) {
-      fgRef.current.d3Force('charge').strength(-300); 
-      fgRef.current.d3Force('link').distance((l: any) => (l.source.isRoot || l.target.isRoot) ? 220 : 100).strength(0.9);
+      // Increased repulsion strength for better area separation
+      fgRef.current.d3Force('charge').strength(-600); 
+      // Increased link distance for better subnode visibility
+      fgRef.current.d3Force('link').distance((l: any) => (l.source.isRoot || l.target.isRoot) ? 250 : 120).strength(0.8);
     }
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full h-[600px] border border-white/10 bg-black/20 backdrop-blur-md relative overflow-hidden">
+    <div ref={containerRef} className="w-full h-[50vh] md:h-[600px] border border-white/10 bg-black/20 backdrop-blur-md relative overflow-hidden">
       <div className="absolute top-4 left-6 z-10 pointer-events-none text-white font-mono">
         <h3 className="text-neon-violet text-sm tracking-widest">{t.skills.matrix}</h3>
       </div>
-      <GhostCursor color="#bc13fe" brightness={0.4} trailLength={40} zIndex={0} />
+
+      {/* Help Button */}
+      <button 
+        onClick={() => setShowHelp(!showHelp)}
+        className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full border border-neon-cyan/50 text-neon-cyan hover:bg-neon-cyan hover:text-black flex items-center justify-center font-bold text-xs transition-all duration-300"
+      >
+        ?
+      </button>
+
+      {showHelp && (
+        <div className="absolute inset-0 z-30 bg-black/80 p-6 flex flex-col items-center justify-center text-center font-mono text-sm text-white">
+          <p className="mb-4">{t.skills.helpText || "Arrastra los nodos para explorar la jerarquía técnica. El tamaño y color indican el dominio."}</p>
+          <button onClick={() => setShowHelp(false)} className="px-4 py-2 border border-white/50 text-white hover:bg-white/10 transition">OK</button>
+        </div>
+      )}
+
+      {!isMobile && <GhostCursor color="#bc13fe" brightness={0.4} trailLength={40} zIndex={0} />}
+
       <ForceGraph2D
         ref={fgRef}
         graphData={graphData}
-        nodeId="id"
+// ... (rest of the component)
         width={dimensions.width}
         height={dimensions.height}
         backgroundColor="rgba(0,0,0,0)"
