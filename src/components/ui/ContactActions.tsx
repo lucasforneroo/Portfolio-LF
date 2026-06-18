@@ -2,7 +2,7 @@ import React from 'react';
 
 export const ContactActions: React.FC = () => {
   return (
-    <div className="fixed top-8 left-8 z-50 flex flex-col gap-4">
+    <div className="fixed top-20 md:top-8 left-8 z-50 flex flex-col gap-4">
       <a 
         href="/cv-es.pdf" 
         target="_blank" 

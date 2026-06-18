@@ -286,6 +286,12 @@ const Lightfall: React.FC<LightfallProps> = ({
     const resize = () => {
       const rect = container.getBoundingClientRect();
       renderer.setSize(rect.width, rect.height);
+      
+      // Mobile optimization
+      const isMobile = window.innerWidth < 768;
+      const effectiveStreakCount = isMobile ? Math.min(2, streakCount) : Math.max(1, Math.min(16, Math.round(streakCount)));
+      uniforms.uStreakCount.value = effectiveStreakCount;
+
       uniforms.iResolution.value = [gl.drawingBufferWidth, gl.drawingBufferHeight, 1];
     };
 
